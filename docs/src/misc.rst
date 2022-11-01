@@ -119,7 +119,10 @@ Data types
         } uv_rusage_t;
 
     Members marked with `(X)` are unsupported on Windows.
-    See :man:`getrusage(2)` for supported fields on Unix
+    See :man:`getrusage(2)` for supported fields on UNIX-like platforms.
+
+    The maximum resident set size is reported in kilobytes, the unit most
+    platforms use natively.
 
 .. c:type:: uv_cpu_info_t
 
@@ -361,6 +364,13 @@ API
 .. c:function:: void uv_free_cpu_info(uv_cpu_info_t* cpu_infos, int count)
 
     Frees the `cpu_infos` array previously allocated with :c:func:`uv_cpu_info`.
+
+.. c:function:: int uv_cpumask_size(void)
+
+    Returns the maximum size of the mask used for process/thread affinities,
+    or ``UV_ENOTSUP`` if affinities are not supported on the current platform.
+
+    .. versionadded:: 1.45.0
 
 .. c:function:: int uv_interface_addresses(uv_interface_address_t** addresses, int* count)
 
